@@ -1,4 +1,7 @@
+import argparse
+import os
 import sys
+
 from netaddr import *
 from reader import FileReader
 
@@ -30,8 +33,22 @@ def parse_file(file):
       parsed.append(r)
   return parsed
 
+
+def options():
+  parser = argparse.ArgumentParser(description = "A simple IP range summarizer")
+
+  parser.add_argument("-p", "--path", type = str, nargs = 1,
+                      metavar = "path", default = None,
+                      help = "Open and read specified text file for IP range summarization.")
+  args = parser.parse_args()
+  if args.path != None:
+    if os.path.exists(args.path[0]):
+      return args.path[0]
+  print(f'File {args.path[0]} does not exist, exiting program.')
+  return sys.exit()
+
 def main():
-  test_file = "test_files/test1.txt"
+  test_file = options()
   parsed = parse_file(test_file)
   ip_list = filter_data(parsed)
   route_summarization = cidr_merge(ip_list)

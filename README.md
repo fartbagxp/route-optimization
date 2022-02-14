@@ -23,5 +23,12 @@ python -m pip freeze > requirements.txt
 There are example files created under the folder **test_files/**.
 
 ```
-python main.py test_files/test0.txt
+python main.py --path test_files/test0.txt
+```
+
+The output will _try_ to collapse the ranges in the test files into IP ranges.
+
+```
+summarizing test_files/test1.txt to route [IPNetwork('10.0.0.0/16')]
+10.0.0.0/16: 10.0.0.0 - 10.0.255.255
 ```
